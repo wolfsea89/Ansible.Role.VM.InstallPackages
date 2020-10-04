@@ -1,24 +1,24 @@
 Ansible.Role.VM.InstallPackages
 =========
 
-This role install packages from repo  (apt, yum/dnf, pip)
+Rola instalująca paczki z repozytorium (apt, yum/dnf, pip)
 
-The role can do package reinstallations. In this case, add the package to `packages_to_install` and to `packages_to_remove` at the same time
+Rola może zrobić reinstalacje paczki. W tym przypadku należy dodać pakiet do `packages_to_install` i jednocześnie do `packages_to_remove`
 
-Language: [EN](README.md), [PL](README.PL.md)
+Język: [EN](README.md), [PL](README.PL.md)
 
-Role Variables
+Zmienne w roli
 --------------
 requires:
 ```
-    os_distribution:       # Linux distribution `CentOS` or `Ubuntu`
-    os_version:            # Linux version
-    repository_keys:       # Repository keys (only ubuntu)
-    repositories:          # Repositories to add or remove
-    packages_to_install:   # Packages to install
-    packages_to_remove:    # Packages to remove
-    pip_packages:          # Packages to install/remove for python
-    pip3_packages:         # Packages to install/remove for python3
+    os_distribution:       # Wersja dystrybucji `CentOS` or `Ubuntu`
+    os_version:            # Wersją systemu
+    repository_keys:       # Lista Repozytorium kluczy (only ubuntu)
+    repositories:          # Lista Repozytoria
+    packages_to_install:   # Lista paczek do zainstalowania
+    packages_to_remove:    # Lista paczek do usuniecia
+    pip_packages:          # Lista moudułów pytahona do zainstalowania
+    pip3_packages:         # Lista moudułów pytahona do zainstalowania (python3)
 ```
 
 var `repository_keys` example:
@@ -56,10 +56,10 @@ var `pip_packages` or `pip3_packages` example:
         - docker-py
 ```
 
-Example Playbook
+Przykładowy Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Przykładowy playbook
 ```
 - hosts: localhost
   remote_user: root
@@ -92,7 +92,7 @@ Including an example of how to use your role (for instance, with variables passe
             - docker-py
 ```
 
-Testing
+Testowanie
 ------------
 
 Testing on:
@@ -102,12 +102,12 @@ Testing on:
   - Centos 7
   - Centos 8
 
-License
+Licencja
 -------
 
 BSD
 
-Author Information
+Autor
 ------------------
  **Maciej Rachuna**
 ##### System Administrator & DevOps Engineer

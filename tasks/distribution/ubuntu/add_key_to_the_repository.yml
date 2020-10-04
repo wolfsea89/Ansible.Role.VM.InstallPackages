@@ -1,0 +1,17 @@
+- name: "[Ubuntu] Add key - '{{ repository_key.name }}'"
+  apt_key:
+    url:           "{{ repository_key.url       | default(omit) }}"
+    keyserver:     "{{ repository_key.keyserver | default(omit) }}"
+    id:            "{{ repository_key.id        | default(omit) }}"
+    state:         "present"
+  ignore_errors:   "{{ repository_key.ignore_errors | default('false') }}"
+  when: repository_key.state == "present"
+
+- name: "[Ubuntu] Remove key - '{{ repository_key.name }}'"
+  apt_key:
+    url:           "{{ repository_key.url       | default(omit) }}"
+    keyserver:     "{{ repository_key.keyserver | default(omit) }}"
+    id:            "{{ repository_key.id        | default(omit) }}"
+    state:         "absent"
+  ignore_errors:   "{{ repository_key.ignore_errors | default('false') }}"
+  when: repository_key.state == "absent"

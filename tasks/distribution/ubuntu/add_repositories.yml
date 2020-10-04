@@ -1,0 +1,15 @@
+- name: "[Ubuntu] Add repository - '{{ repository.name }}'"
+  apt_repository:
+    repo: "{{ repository.repo | default(omit)  }}"
+    filename: "{{ repository.filename | default(omit)  }}"
+    state: present
+    update_cache: no
+  when: repository.state == 'present'
+
+- name: "[Ubuntu] Remove repository - '{{ repository.name }}'"
+  apt_repository:
+    repo: "{{ repository.repo }}"
+    filename: "{{ repository.filename | default(omit) }}"
+    state: absent
+    update_cache: no
+  when: repository.state == 'absent'
