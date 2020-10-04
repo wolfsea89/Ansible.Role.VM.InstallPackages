@@ -1,0 +1,36 @@
+- name: "[Ubuntu] Add key to Repositories"
+  include_tasks: add_key_to_the_repository.yml
+  loop: "{{ repository_keys }}"
+  loop_control:
+    loop_var: repository_key
+  when: repository_keys | length > 0
+
+- name: "[Ubuntu] Add Repositories"
+  include_tasks: add_repositories.yml
+  loop: "{{ repositories }}"
+  loop_control:
+    loop_var: repository
+  when: repositories | length > 0
+  
+- name: "[Ubuntu] Initial apt update"
+  changed_when: false
+  apt:  
+    update_cache:  true
+
+- name: "[Ubuntu] Initial apt upgrade"
+  apt:  
+    upgrade: dist
+    update_cache:  true
+  when: packages_upggrade
+
+- name: "[Ubuntu] Remove common packages"
+  apt:
+    name: "{{ packages_to_remove }}"
+    state: absent
+  when: packages_to_remove | length > 0
+
+- name: "[Ubuntu] Install packages from Repo"
+  apt:
+    name: "{{ packages_to_install }}"
+    state: present
+  when: packages_to_install | length > 0

@@ -1,0 +1,48 @@
+---
+# Python 2
+- name: "[Ubuntu][Focal] Install pyhon-pip"
+  block:
+    - name: "[Ubuntu][Focal] Download script"
+      get_url:
+        url: https://bootstrap.pypa.io/get-pip.py
+        dest: /tmp/get-pip.py
+    
+    - name: "[Ubuntu][Focal] Run script"
+      changed_when: false
+      shell: python /tmp/get-pip.py
+  when: 
+    - os_distribution == "Ubuntu"
+    - os_version == "20.04"
+
+- name: "[Python] Upgrade pip"
+  pip:
+    name: pip
+    extra_args: --upgrade
+  when: packages_upggrade
+
+- name: "[Python] Install pip packages"
+  pip:
+    name: "{{ pip_packages.packages_to_install }}"
+    state: present
+  when: pip_packages.packages_to_install is defined
+
+- name: "[Python] Remove pip packages"
+  pip:
+    name: "{{ pip_packages.packages_to_remove }}"
+    state: absent
+  when: pip_packages.packages_to_remove is defined
+
+# Python 3
+- name: "[Python3] Remove pip packages"
+  pip:
+    name: "{{ pip3_packages.packages_to_remove }}"
+    state: absent
+    executable: pip3
+  when: pip3_packages.packages_to_remove is defined
+
+- name: "[Python3] Install pip packages"
+  pip:
+    name: "{{ pip3_packages.packages_to_install }}"
+    state: present
+    executable: pip3
+  when: pip3_packages.packages_to_install is defined
