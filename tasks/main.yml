@@ -1,0 +1,15 @@
+---
+- name: "[Ubuntu] Install packages"
+  include_tasks: distribution/ubuntu/main.yml
+  when:
+  - os_distribution is defined
+  - os_distribution == "Ubuntu"
+
+- name: "[CentOS] Install packages"
+  include_tasks: distribution/centos/main.yml
+  when:
+  - os_distribution is defined 
+  - os_distribution == "CentOS"
+
+- name: "[Python] Install packages"
+  include_tasks: pip/main.yml

@@ -1,0 +1,36 @@
+- name: "[CentOS] Add Repositories"
+  include_tasks: add_repositories.yml
+  loop: "{{ repositories }}"
+  loop_control:
+    loop_var: repository
+  when: repositories | length > 0
+  
+- name: "[CentOS] Initial apt update"
+  changed_when: false
+  yum:  
+    update_cache:  true
+
+- name: "[CentOS] Install 'epel-release' package"
+  yum:
+    name: epel-release
+    state: present
+    skip_broken: yes
+
+- name: "[CentOS] Initial apt upgrade"
+  yum:  
+    name: "*"
+    state: latest
+  when: packages_upggrade
+
+- name: "[CentOS] Install packages from Repo"
+  yum:
+    name: "{{ packages_to_install }}"
+    state: present
+    skip_broken: yes
+  when: packages_to_install | length > 0
+
+- name: "[CentOS] Remove common packages"
+  yum:
+    name: "{{ packages_to_remove }}"
+    state: present
+  when: packages_to_remove | length > 0

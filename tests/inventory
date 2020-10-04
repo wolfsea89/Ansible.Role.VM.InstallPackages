@@ -1,0 +1,18 @@
+localhost:
+    vars:
+        repository_keys: 
+            - name: "Docker"
+              url: "https://download.docker.com/linux/ubuntu/gpg"
+              state: present
+        repositories:
+            - name: "Docker"
+              repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+              filename: docker
+              state: present
+        packages_to_install:
+            - docker-ce
+            - htop
+            - apt-transport-https
+            - ca-certificates
+            - curl
+            - software-properties-common

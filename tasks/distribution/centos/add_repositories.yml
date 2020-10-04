@@ -1,0 +1,20 @@
+- name: "[CentOS] Add repository - '{{ repository.name }}'"
+  yum_repository:
+    name: "{{ repository.name}}"
+    description: "{{ repository.description | default('') }}"
+    enabled: "{{ repository.enabled }}"
+    baseurl: "{{ repository.baseurl }}"
+    file: "{{ repository.file | default(omit) }}"
+    gpgkey: "{{ repository.gpgkey | default(omit) }}"
+    gpgcheck: "{{ repository.gpgcheck | default('no') }}"
+    state: present
+  when: repository.state == 'present'
+
+- name: "[CentOS] Remove repository - '{{ repository.name }}'"
+  yum_repository:
+    name: "{{ repository.name}}"
+    description: "{{ repository.description | default('') }}"
+    baseurl: "{{ repository.baseurl }}"
+    file: "{{ repository.file }}"
+    state: absent
+  when: repository.state == 'absent'
